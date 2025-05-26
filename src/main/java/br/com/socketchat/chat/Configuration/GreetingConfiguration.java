@@ -20,6 +20,6 @@ public class GreetingConfiguration implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/gs-guide-websocket").setAllowedOrigins("http://localhost:3000").withSockJS();
+        registry.addEndpoint("/gs-guide-websocket").setAllowedOrigins("*").withSockJS();
     }
 }

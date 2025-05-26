@@ -25,7 +25,7 @@ public class GreetingController {
 
     @MessageMapping("/hello")
     @SendTo("/topic/greetings")
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     public Greeting greeting(Greeting message) throws Exception {
         Thread.sleep(1000); // simulated delay
         messageService.SaveMessage(message);

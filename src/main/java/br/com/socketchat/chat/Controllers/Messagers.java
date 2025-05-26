@@ -24,7 +24,7 @@ public class Messagers {
 
 
     @GetMapping()
-    @CrossOrigin(origins = "http://localhost:3000")
+    @CrossOrigin(origins = "*")
     public List<MessageEntity> findall () {
         return messageRepository.findAll();}
 }
