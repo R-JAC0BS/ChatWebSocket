@@ -28,7 +28,7 @@ public class UserController {
 
 
     @PostMapping
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "https://chatwebsocketfrontend.onrender.com")
     public ResponseEntity<String> newnickname(@RequestBody UserDto newUser) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveUser(newUser));
     }

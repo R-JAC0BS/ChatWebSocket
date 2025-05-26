@@ -24,7 +24,7 @@ public class Messagers {
 
 
     @GetMapping()
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "https://chatwebsocketfrontend.onrender.com")
     public List<MessageEntity> findall () {
         return messageRepository.findAll();}
 }
