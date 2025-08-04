@@ -7,8 +7,8 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 
-@Getter
-@Setter
+
+
 @Entity
 @Table(name = "Mensagem")
 public class MessageEntity {
@@ -20,6 +20,31 @@ public class MessageEntity {
     private String content;
 
     private String sender;
+
+    private LocalDateTime timestamp;
+
+    public MessageEntity() {
+
+    }
+
+    public ChatEntity getChat() {
+        return chat;
+    }
+
+    public void setChat(ChatEntity chat) {
+        this.chat = chat;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "chat_id")
+    private ChatEntity chat;
+
+    public MessageEntity( String content, String sender, LocalDateTime timestamp) {
+        this.content = content;
+        this.sender = sender;
+        this.timestamp = timestamp;
+    }
+
 
     public Long getId() {
         return id;
@@ -53,11 +78,7 @@ public class MessageEntity {
         this.timestamp = timestamp;
     }
 
-    private LocalDateTime timestamp;
 
-
-    public MessageEntity() {
-    }
 
 
 }

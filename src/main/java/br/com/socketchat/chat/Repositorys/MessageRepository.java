@@ -11,6 +11,4 @@ public interface MessageRepository extends JpaRepository<MessageEntity, Long> {
     @Override
     Optional<MessageEntity> findById(Long id);
 
-
-
 }

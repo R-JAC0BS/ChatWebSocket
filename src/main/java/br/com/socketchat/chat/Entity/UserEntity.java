@@ -1,22 +1,18 @@
 package br.com.socketchat.chat.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "users")
+import java.util.List;
+
 @Getter
 @Setter
-public class UserEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true, nullable = false, length = 50)
-    private String username;
+@Entity
+@Table(name = "users")
+public class UserEntity extends GenericEntity {
 
     public String getUsername() {
         return username;
@@ -25,4 +21,38 @@ public class UserEntity {
     public void setUsername(String username) {
         this.username = username;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<ChatEntity> getChats() {
+        return chats;
+    }
+
+    public void setChats(List<ChatEntity> chats) {
+        this.chats = chats;
+    }
+
+    @Column(length = 50)
+    private String username;
+
+    @Column (unique = true, nullable = false)
+    private String email;
+
+
+    @ManyToMany()
+    @JoinTable(
+            name = "user_chat",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id")
+
+    )
+    @JsonManagedReference
+    private List<ChatEntity> chats;
+
 }

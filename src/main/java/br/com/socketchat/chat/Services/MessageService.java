@@ -1,41 +1,36 @@
 package br.com.socketchat.chat.Services;
 
 
+
 import br.com.socketchat.chat.Entity.Greeting;
 import br.com.socketchat.chat.Entity.MessageEntity;
 import br.com.socketchat.chat.Repositorys.MessageRepository;
-import br.com.socketchat.chat.Repositorys.UserRepository;
+import br.com.socketchat.chat.BusinessCase.Creation.CreationMessages.CreationMessageFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 
 
 @Service
 public class MessageService {
 
+    @Autowired
+    private final MessageRepository chatRepository;
 
-    private final MessageRepository messageRepository;
-    private final UserRepository userRepository;
+    @Qualifier("MessageFactory")
+    CreationMessageFactory messageFactory;
 
+    public MessageService( MessageRepository chatRepository1) {
 
-    public MessageService(MessageRepository messageRepository, UserRepository userRepository) {
-        this.messageRepository = messageRepository;
-        this.userRepository = userRepository;
+        this.chatRepository = chatRepository1;
     }
 
-    public void SaveMessage(Greeting greeting) throws Exception{
-        String username = String.valueOf(userRepository.findByusername(String.valueOf(greeting.getUsername())));
-
-        MessageEntity messageEntity = new MessageEntity();
-        System.out.println("salvando mensagem: " + greeting.getContent());
-        messageEntity.setId(null);
-        messageEntity.setContent(greeting.getContent());
-        messageEntity.setSender(greeting.getUsername());
-        messageEntity.setTimestamp(LocalDateTime.now());
-
-        messageRepository.save(messageEntity);
-
-
+    @Async
+    public void saveMessage(Greeting greeting, Long id) throws Exception {
+        MessageEntity chat  = messageFactory.manipuleMessageFactory(greeting,id);
+        chatRepository.save(chat);
     }
 
 

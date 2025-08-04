@@ -1,6 +1,8 @@
 package br.com.socketchat.chat.DTO;
 
 public record UserDto(
-        String username
+        String username,
+        String email
+
 ) {
 }

@@ -1,40 +1,23 @@
 package br.com.socketchat.chat.Services;
 
+import br.com.socketchat.chat.Components.Filter.UserComponent;
 import br.com.socketchat.chat.DTO.UserDto;
-import br.com.socketchat.chat.Entity.UserEntity;
-import br.com.socketchat.chat.Repositorys.UserRepository;
-import br.com.socketchat.chat.Strategy.Validation.NickNameValidation;
-import org.springframework.beans.BeanUtils;
+import br.com.socketchat.chat.BusinessCase.Creation.CreationUser.UserFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-    private final NickNameValidation nickNameValidation;
 
-    UserEntity userEntity = new UserEntity();
+    private final UserFactory userFactory;
 
-    // Injeção via construtor (mais recomendada)
-    public UserService(UserRepository userRepository, NickNameValidation nickNameValidation) {
-        this.userRepository = userRepository;
-        this.nickNameValidation = nickNameValidation;
+    public UserService(@Qualifier("UserFactory") UserFactory userFactory) {
+        this.userFactory = userFactory;
     }
 
-    public String saveUser(UserDto userDto) throws Exception {
-        Optional<UserEntity> nameValidation = userRepository.findByusername(userDto.username());
-        if (nameValidation.isPresent()) {
-            return "Bem vindo de volta!";
-        }
-
-        nickNameValidation.isNickNameValid(userDto);
-
-        userEntity.setUsername(userDto.username());
-
-        userRepository.save(userEntity);
-
+    public String saveUser(UserDto userDto){
+        UserComponent.saveUser(userFactory.userCreation(userDto));
         return "Usuario criado com sucesso";
     }
 }

@@ -14,15 +14,8 @@ public class Greeting {
     @JsonProperty("username")
     private String username;
 
-    public Greeting(String bot) {
-    }
-
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public Greeting() {
@@ -37,9 +30,4 @@ public class Greeting {
         return content;
     }
 
-    public Greeting(String content, String username) {
-
-        this.username = username;
-        this.content = content;
-    }
 }
