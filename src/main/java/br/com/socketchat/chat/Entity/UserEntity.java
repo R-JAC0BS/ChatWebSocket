@@ -3,16 +3,32 @@ package br.com.socketchat.chat.Entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Getter
 @Setter
 @Entity
+@Data
 @Table(name = "users")
 public class UserEntity extends GenericEntity {
+
+
+
+
+    @Column(length = 50)
+    @NotBlank(message = "Username não pode ser nulo")
+    private String username;
+
+    @Column (unique = true, nullable = false)
+    @NotBlank(message = "Email não pode ser nulo")
+    private String email;
 
     public String getUsername() {
         return username;
@@ -38,12 +54,6 @@ public class UserEntity extends GenericEntity {
         this.chats = chats;
     }
 
-    @Column(length = 50)
-    private String username;
-
-    @Column (unique = true, nullable = false)
-    private String email;
-
 
     @ManyToMany()
     @JoinTable(
@@ -54,5 +64,8 @@ public class UserEntity extends GenericEntity {
     )
     @JsonManagedReference
     private List<ChatEntity> chats;
+
+
+
 
 }

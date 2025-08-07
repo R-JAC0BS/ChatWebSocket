@@ -19,7 +19,7 @@ public class MessageService {
     @Autowired
     private final MessageRepository chatRepository;
 
-    @Qualifier("MessageFactory")
+
     CreationMessageFactory messageFactory;
 
     public MessageService( MessageRepository chatRepository1) {

@@ -34,7 +34,7 @@ public class chatController {
         return chatService.listarChat(email);
     };
 
-    @GetMapping("f")
+    @GetMapping("findChat")
     public ChatEntity getChat(@RequestParam Long chatId)  {
         return chatService.findChatByID(chatId);
     };
