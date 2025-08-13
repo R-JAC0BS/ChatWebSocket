@@ -22,6 +22,13 @@ public class UserComponent {
         return (userRepository.findByEmail(email).orElseThrow(NotFoundUserException::new));
     }
 
+
+
+    public static UserEntity findUser(Long id) {
+        return userRepository.findById(id);
+    };
+
+
     public static void saveUser (UserEntity user) {
         userRepository.save(user);
     }

@@ -19,7 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/nickname")
+@RequestMapping("/user" +
+        "")
 public class UserController {
 
 
@@ -48,6 +49,12 @@ public class UserController {
     @GetMapping("/findall")
     public List<UserEntity> getAllUsers() throws Exception {
         return userRepository.findAll();
+    }
+
+    @PutMapping()
+    public ResponseEntity<String> updateUser(@RequestParam Long id,  @RequestBody UserDto user) throws Exception {
+        userService.alterUser(id, user);
+        return ResponseEntity.status(HttpStatus.OK).body("Usuario alterado com sucesso");
     }
 
 
